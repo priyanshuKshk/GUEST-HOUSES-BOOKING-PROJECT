@@ -12,11 +12,11 @@ export default function AdminDashboard() {
 const [recentActivity, setRecentActivity] = useState([]);
   useEffect(() => {
     // Replace this with your actual backend API
-    api.get('/api/admin/summary').then(res => {
+    api.get('/admin/summary').then(res => {
       setSummary(res.data);
     });
 
-api.get('/api/admin/recent-activity').then(res => setRecentActivity(res.data));
+api.get('/admin/recent-activity').then(res => setRecentActivity(res.data));
 }, []);
 
   return (
