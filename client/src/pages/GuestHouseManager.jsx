@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-
+const api = axios.create({
+  baseURL: import.meta.env.VITE_API_URL, // dev: http://localhost:5000/api
+});
 export default function GuestHouseManager() {
   const [showAddForm, setShowAddForm] = useState(false); 
   const [guestHouses, setGuestHouses] = useState([]);
@@ -18,15 +20,17 @@ export default function GuestHouseManager() {
     bookedRooms: '', 
   });
   // Fetch guest houses
-  const fetchGuestHouses = async () => {
-    try {
-      const res = await axios.get('/api/guesthouses');
-      setGuestHouses(res.data.guestHouses || []);
-    } catch (err) {
-      console.error('Error fetching guest houses', err);
-    }
-  };
-
+const fetchGuestHouses = async () => {
+  try {
+    const res = await api.get('/guesthouses');
+    // If backend ever changes to plain array, this still works.
+    const data = Array.isArray(res.data) ? res.data : res.data.guestHouses;
+    setGuestHouses(data);
+  } catch (err) {
+    console.error('Error fetching guest houses', err);
+    alert('❌ Failed to fetch guest houses. Please try again later.');
+  }
+};
   useEffect(() => {
     fetchGuestHouses();
   }, []);
@@ -46,7 +50,7 @@ export default function GuestHouseManager() {
   }
 
   try {
-    await axios.post('/api/guesthouses', formData);
+    await api.post('/guesthouses', formData);
     setFormData({ name: '', location: '', rooms: '', bookedRooms: '' });
     setShowAddForm(false);     // close the panel after save
     fetchGuestHouses();
@@ -159,7 +163,7 @@ export default function GuestHouseManager() {
 
   const handleUpdate = async (id) => {
     try {
-      await axios.put(`/api/guesthouses/${id}`, editData); // <-- adjust route if needed
+      await api.put(`/guesthouses/${id}`, editData); // <-- adjust route if needed
       setIsEditing(null);
       fetchGuestHouses(); // refresh list
     } catch (err) {
@@ -222,7 +226,7 @@ export default function GuestHouseManager() {
   name="bookedRooms"
   type="number"
   value={editData.bookedRooms}
-  onChange={handleChange}
+  onChange={handleEditChange}
   placeholder="Booked Rooms"
   className="w-full border p-2 rounded"
   required

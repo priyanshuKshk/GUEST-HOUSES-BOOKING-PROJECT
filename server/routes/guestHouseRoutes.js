@@ -26,4 +26,6 @@ router.put('/:id', async (req, res) => {
   }
 });
 
+// ✅ Only available guest houses
+
 module.exports = router;

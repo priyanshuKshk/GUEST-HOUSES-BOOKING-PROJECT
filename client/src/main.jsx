@@ -8,6 +8,7 @@ import { createBrowserRouter,createRoutesFromElements, Route, RouterProvider } f
 import Home from './pages/Home.jsx'
 import GuestHouseManager from './pages/GuestHouseManager.jsx'
 import AdminDashboard from './pages/AdminDashboard.jsx'
+import CheckAvailability from './pages/CheckAvailability.jsx'
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
@@ -15,6 +16,7 @@ const router = createBrowserRouter(
       <Route path='/admin/dashboard' element={<AdminDashboard />} />
 
       <Route path='/guesthouses' element={<GuestHouseManager />} />
+      <Route path='admin/check-availability' element={<CheckAvailability />} />
     
       </Route>
   )

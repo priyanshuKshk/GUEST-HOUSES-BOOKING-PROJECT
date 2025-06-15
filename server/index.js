@@ -4,8 +4,10 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 dotenv.config();
 const app = express();
-
-app.use(cors());
+app.use(cors({
+  origin: ['http://localhost:5173', 'https://guest-houses-booking-project.onrender.com'],
+  credentials: true
+}));
 app.use(express.json());
 
 // Connect MongoDB
@@ -18,7 +20,10 @@ mongoose.connect(process.env.MONGO_URI, {
 
 const guestHouseRoutes = require('./routes/guestHouseRoutes');
 app.use('/api/guesthouses', guestHouseRoutes);
+const adminRoutes = require('./routes/admin');
 
+// …other middleware…
+app.use('/api/admin', adminRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

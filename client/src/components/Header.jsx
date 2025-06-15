@@ -14,9 +14,7 @@ export default function Header() {
         <div className="text-xl font-bold">🏨 Guest House Admin</div>
         <div className="flex items-center gap-4">
           <span className="text-sm hidden sm:inline">Hello, Admin</span>
-          <button className="bg-red-600 hover:bg-red-700 px-3 py-1 rounded text-sm">
-            Logout
-          </button>
+
         </div>
       </header>
 
@@ -33,7 +31,7 @@ export default function Header() {
         <div className={`flex-col sm:flex-row sm:flex gap-6 text-sm font-medium ${isOpen ? 'flex' : 'hidden'} sm:flex`}>
           <Link to="/" className="hover:text-blue-600 py-1">Home</Link>
           <Link to="/admin/dashboard" className="hover:text-blue-600 py-1">Dashboard</Link>
-          <Link to="/admin/guesthouses" className="hover:text-blue-600 py-1">Guest Houses</Link>
+          <Link to="/guesthouses" className="hover:text-blue-600 py-1">Guest Houses</Link>
           <Link to="/admin/check-availability" className="hover:text-blue-600 py-1">Availability</Link>
         </div>
       </nav>

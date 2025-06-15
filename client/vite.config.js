@@ -7,7 +7,7 @@ export default defineConfig({
     server: {
     proxy: {
       '/api': {
-        target: 'https://guest-houses-booking-project-1.onrender.com',
+        target: 'http://localhost:5000',
         changeOrigin: true,
       },
     },
