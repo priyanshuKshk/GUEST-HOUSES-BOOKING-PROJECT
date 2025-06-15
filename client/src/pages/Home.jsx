@@ -9,14 +9,23 @@ export default function Home() {
         Manage guest houses, bookings, and availability in one place.
       </p>
 
-      <div className="flex flex-wrap gap-4 justify-center">
-        <Link to="/admin/dashboard" className="bg-blue-950 hover:bg-blue-900 text-white px-6 py-2 rounded shadow">
+       <div className="flex flex-wrap gap-4 justify-center">
+        <Link
+          to="/admin/dashboard"
+          className="w-48 text-center bg-blue-950 hover:bg-blue-900 text-white px-6 py-2 rounded shadow"
+        >
           Go to Dashboard
         </Link>
-        <Link to="/guesthouses" className="bg-blue-950 hover:bg-blue-900 text-white px-6 py-2 rounded shadow">
+        <Link
+          to="/guesthouses"
+          className="w-48 text-center bg-blue-950 hover:bg-blue-900 text-white px-6 py-2 rounded shadow"
+        >
           Manage Guest Houses
         </Link>
-        <Link to="/admin/check-availability" className="bg-blue-950 hover:bg-blue-900 text-white px-6 py-2 rounded shadow">
+        <Link
+          to="/admin/check-availability"
+          className="w-48 text-center bg-blue-950 hover:bg-blue-900 text-white px-6 py-2 rounded shadow"
+        >
           Check Availability
         </Link>
       </div>

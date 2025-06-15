@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FiMenu, FiX } from "react-icons/fi";
 import { motion } from "framer-motion";
-
+import logo from "../../public/image.png";
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const toggleMenu = () => setIsOpen(!isOpen);
@@ -11,7 +11,40 @@ export default function Header() {
     <div>
       {/* Top Header */}
       <header className="bg-gray-800 text-white py-3 px-6 flex justify-between items-center">
-        <div className="text-xl font-bold">🏨 Guest House Admin</div>
+        <div
+          style={{
+            justifyContent: "space-between",
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <Link to={"/"}>
+            <img
+              src={logo}
+              alt="guest-house-logo"
+              className="w-10 h-10 "
+              style={{
+                maxWidth: "250px",
+                maxHeight: "50px",
+                padding: "4px",
+                marginRight: "10px",
+                marginBottom: "2px",
+              }}
+            />
+          </Link>
+          <Link
+            to="/home"
+            className=" font-bold playfair-display"
+            id="myElement"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              fontSize: "1.8rem",
+            }}
+          >
+            Guest Houses
+          </Link>
+        </div>
         <div className="flex items-center gap-4">
           <span className="text-sm hidden sm:inline">Hello, Admin</span>
 
