@@ -48,6 +48,8 @@ const fetchGuestHouses = async () => {
 
   // Submit form
   const handleSubmit = async (e) => {
+    const rooms = Number(formData.rooms);
+const booked = Number(formData.bookedRooms);
   e.preventDefault();
  if (
   !/^\d+$/.test(formData.rooms) ||
@@ -56,15 +58,15 @@ const fetchGuestHouses = async () => {
   alert('❌ Please enter only positive numbers in Rooms and Booked Rooms.');
   return;
 }
-if (!Number.isInteger(formData.rooms) || formData.rooms <= 0) {
+if (!Number.isInteger(rooms) ||rooms <= 0) {
     alert('❌  Total rooms must be a positive integer (1 or more).');
     return;
   }
-  if (!Number.isInteger(formData.bookedRooms) || formData.bookedRooms < 0) {
+  if (!Number.isInteger(booked) || booked < 0) {
     alert('❌  Booked rooms must be 0 or a positive integer.');
     return;
   }
-  if (Number(formData.bookedRooms) > Number(formData.rooms)) {
+  if (Number(booked) > Number(rooms)) {
     alert('❌ Booked rooms cannot be more than total rooms.');
     return;
   }
