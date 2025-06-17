@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 export default function Home() {
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-gray-50 text-center px-6">
+    <div className="h-screen flex flex-col justify-center items-center bg-gray-50 text-center px-6">
       <h1 className="text-3xl md:text-4xl font-bold mb-4 text-gray-800">🏨 Guest House Admin Panel</h1>
       <p className="text-gray-600 mb-8 text-sm md:text-base">
         Manage guest houses, bookings, and availability in one place.

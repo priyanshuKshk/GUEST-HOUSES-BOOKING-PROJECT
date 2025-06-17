@@ -9,20 +9,46 @@ import Home from './pages/Home.jsx'
 import GuestHouseManager from './pages/GuestHouseManager.jsx'
 import AdminDashboard from './pages/AdminDashboard.jsx'
 import CheckAvailability from './pages/CheckAvailability.jsx'
+import { AuthProvider } from './context/AuthContext.jsx'
+// import Login from './pages/Login.jsx'
+import PrivateRoute from './pages/PrivateRoute.jsx'
+import SignUp from './pages/SignUp.jsx'
+import Login from './pages/Login.jsx'
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<App />}>
-      <Route path='/' element={<Home />} />
-      <Route path='/admin/dashboard' element={<AdminDashboard />} />
+     <Route path="/" element={<App />}>
+      {/* Public Route */}
+      <Route path="/login" element={<Login />} />
 
-      <Route path='/guesthouses' element={<GuestHouseManager />} />
-      <Route path='admin/check-availability' element={<CheckAvailability />} />
-    
-      </Route>
+      {/* Protected Routes */}
+      <Route path="/" element={
+        <PrivateRoute>
+          <Home />
+        </PrivateRoute>
+      } />
+      <Route path="/admin/dashboard" element={
+        <PrivateRoute>
+          <AdminDashboard />
+        </PrivateRoute>
+      } />
+      <Route path="/guesthouses" element={
+        <PrivateRoute>
+          <GuestHouseManager />
+        </PrivateRoute>
+      } />
+      <Route path="/admin/check-availability" element={
+        <PrivateRoute>
+          <CheckAvailability />
+        </PrivateRoute>
+      } />
+
+    </Route>
   )
 );
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router} />
+      <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   </StrictMode>,
 )

@@ -170,7 +170,18 @@ const fetchGuestHouses = async () => {
       console.error('Error updating guest house', err);
     }
   };
+const handleDelete = async (id) => {
+  const confirmDelete = window.confirm("⚠️ Are you sure you want to delete this guest house?");
+  if (!confirmDelete) return;
 
+  try {
+    await api.delete(`/guesthouses/${id}`);
+    fetchGuestHouses(); // Refresh after deletion
+  } catch (err) {
+    console.error("Error deleting guest house", err);
+    alert("❌ Failed to delete. Please try again.");
+  }
+};
   return (
     <div
       key={gh._id}
@@ -190,13 +201,21 @@ const fetchGuestHouses = async () => {
     <p className="text-gray-600"><strong>🛏️ Total Rooms:</strong> {gh.rooms}</p>
 <p className="text-gray-600"><strong>📦 Booked:</strong> {gh.bookedRooms}</p>
 <p className="text-gray-600"><strong>✅ Available:</strong> {gh.rooms - gh.bookedRooms}</p>
+<div className="flex gap-2 mt-4">
+  <button
+    className="bg-blue-950 text-white py-1 px-3 rounded hover:bg-blue-900"
+    onClick={() => startEditing(gh)}
+  >
+    Edit
+  </button>
 
-      <button
-        className="mt-4 bg-blue-950 text-white py-1 px-3 rounded hover:bg-blue-900"
-        onClick={() => startEditing(gh)}
-      >
-        Edit
-      </button>
+  <button
+    className="bg-red-600 text-white py-1 px-3 rounded hover:bg-red-700"
+    onClick={() => handleDelete(gh._id)}
+  >
+    Delete
+  </button>
+</div>
 
       {isEditing === gh._id && (
         <div className="mt-4 space-y-2">

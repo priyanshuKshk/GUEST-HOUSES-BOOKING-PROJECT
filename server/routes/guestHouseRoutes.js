@@ -25,7 +25,18 @@ router.put('/:id', async (req, res) => {
     res.status(500).json({ error: 'Failed to update guest house' });
   }
 });
-
+router.delete('/:id', async (req, res) => {
+  try {
+    const deleted = await GuestHouse.findByIdAndDelete(req.params.id);
+    if (!deleted) {
+      return res.status(404).json({ message: 'Guest House not found' });
+    }
+    res.json({ message: 'Guest House deleted successfully' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
 // ✅ Only available guest houses
-
+// routes/guesthouses.js
 module.exports = router;
