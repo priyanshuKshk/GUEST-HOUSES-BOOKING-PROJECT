@@ -19,6 +19,7 @@ export default function GuestHouseManager() {
     rooms: '',
     bookedRooms: '', 
   });
+  const isNumeric = (v) => v !== '' && !isNaN(v);
   // Fetch guest houses
 const fetchGuestHouses = async () => {
   try {
@@ -37,13 +38,32 @@ const fetchGuestHouses = async () => {
 
   // Handle input change
   const handleChange = (e) => {
+      const { name, value } = e.target;
+
+  if (['rooms', 'bookedRooms'].includes(name)) {
+    if (!/^\d*$/.test(value)) return; // allow only digits (empty or numbers)
+  }
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   // Submit form
   const handleSubmit = async (e) => {
   e.preventDefault();
-
+ if (
+  !/^\d+$/.test(formData.rooms) ||
+  !/^\d+$/.test(formData.bookedRooms)
+) {
+  alert('❌ Please enter only positive numbers in Rooms and Booked Rooms.');
+  return;
+}
+if (!Number.isInteger(formData.rooms) || formData.rooms <= 0) {
+    alert('❌  Total rooms must be a positive integer (1 or more).');
+    return;
+  }
+  if (!Number.isInteger(formData.bookedRooms) || formData.bookedRooms < 0) {
+    alert('❌  Booked rooms must be 0 or a positive integer.');
+    return;
+  }
   if (Number(formData.bookedRooms) > Number(formData.rooms)) {
     alert('❌ Booked rooms cannot be more than total rooms.');
     return;
@@ -103,6 +123,7 @@ const fetchGuestHouses = async () => {
       <input
         type="number"
         name="rooms"
+          min="0"
         placeholder="Total Rooms"
         value={formData.rooms}
         onChange={handleChange}
@@ -112,6 +133,7 @@ const fetchGuestHouses = async () => {
       <input
         type="number"
         name="bookedRooms"
+          min="0"
         placeholder="Booked Rooms"
         value={formData.bookedRooms}
         onChange={handleChange}
@@ -158,6 +180,9 @@ const fetchGuestHouses = async () => {
   };
 
   const handleEditChange = (e) => {
+     if (['rooms', 'bookedRooms'].includes(name)) {
+    if (!/^\d*$/.test(value)) return; // allow only digits
+  }
     setEditData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
@@ -166,6 +191,14 @@ const fetchGuestHouses = async () => {
       await api.put(`/guesthouses/${id}`, editData); // <-- adjust route if needed
       setIsEditing(null);
       fetchGuestHouses(); // refresh list
+      if (
+  !/^\d+$/.test(editData.rooms) ||
+  !/^\d+$/.test(editData.bookedRooms)
+) {
+  alert('❌ Please enter only positive numbers in Rooms and Booked Rooms.');
+  return;
+}
+
     } catch (err) {
       console.error('Error updating guest house', err);
     }

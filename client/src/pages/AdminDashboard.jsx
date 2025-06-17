@@ -55,7 +55,12 @@ api.get('/admin/recent-activity').then(res => setRecentActivity(res.data));
         <li key={index} className="py-2">
           <div className="font-medium text-gray-800">{item.name} ({item.location})</div>
           <div className="text-sm text-gray-600">
-            Rooms: {item.totalRooms}, Booked: {item.bookedRooms}, Available: {item.totalRooms - item.bookedRooms}
+            Rooms: {item.totalRooms}, Booked: {item.bookedRooms}, Available: {
+  isNaN(Number(item.rooms)) || isNaN(Number(item.bookedRooms))
+    ? 'Invalid data'
+    : Number(item.rooms) - Number(item.bookedRooms)
+}
+
           </div>
           <div className="text-xs text-gray-400">Added on: {new Date(item.createdAt).toLocaleString()}</div>
         </li>
