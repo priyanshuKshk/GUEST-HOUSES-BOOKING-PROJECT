@@ -4,7 +4,11 @@ const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL, // dev: http://localhost:5000/api
 });
 export default function GuestHouseManager() {
-  const [showAddForm, setShowAddForm] = useState(false); 
+  const [showAddForm, setShowAddForm] = useState(false);
+  const [loadingId, setLoadingId] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+ 
   const [guestHouses, setGuestHouses] = useState([]);
   const [formData, setFormData] = useState({
     name: '',
@@ -51,6 +55,7 @@ const fetchGuestHouses = async () => {
     const rooms = Number(formData.rooms);
 const booked = Number(formData.bookedRooms);
   e.preventDefault();
+    setIsLoading(true);
  if (
   !/^\d+$/.test(formData.rooms) ||
   !/^\d+$/.test(formData.bookedRooms)
@@ -78,6 +83,9 @@ if (!Number.isInteger(rooms) ||rooms <= 0) {
     fetchGuestHouses();
   } catch (err) {
     console.error('Error adding guest house', err);
+  }
+  finally {
+    setIsLoading(false);
   }
 };
 
@@ -145,11 +153,37 @@ if (!Number.isInteger(rooms) ||rooms <= 0) {
 
       <div className="flex justify-between">
         <button
-          type="submit"
-          className="bg-blue-900 text-white px-4 py-2 rounded hover:bg-blue-700"
-        >
-          Save
-        </button>
+  type="submit"
+  disabled={isLoading}
+  className={`bg-blue-900 text-white px-4 py-2 rounded hover:bg-blue-700 ${
+    isLoading ? 'opacity-50 cursor-not-allowed' : ''
+  }`}
+>
+  {isLoading ? (
+    <div className="flex items-center gap-2">
+      <svg className="animate-spin h-4 w-4 text-white" viewBox="0 0 24 24">
+        <circle
+          className="opacity-25"
+          cx="12"
+          cy="12"
+          r="10"
+          stroke="currentColor"
+          strokeWidth="4"
+          fill="none"
+        />
+        <path
+          className="opacity-75"
+          fill="currentColor"
+          d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+        />
+      </svg>
+      Saving...
+    </div>
+  ) : (
+    'Save'
+  )}
+</button>
+
         <button
           type="button"
           onClick={() => {
@@ -189,6 +223,7 @@ if (!Number.isInteger(rooms) ||rooms <= 0) {
   };
 
   const handleUpdate = async (id) => {
+    setLoadingId(id);
     try {
       await api.put(`/guesthouses/${id}`, editData); // <-- adjust route if needed
       setIsEditing(null);
@@ -204,6 +239,9 @@ if (!Number.isInteger(rooms) ||rooms <= 0) {
     } catch (err) {
       console.error('Error updating guest house', err);
     }
+    finally {
+    setLoadingId(null); // stop loading
+  }
   };
 const handleDelete = async (id) => {
   const confirmDelete = window.confirm("⚠️ Are you sure you want to delete this guest house?");
@@ -286,11 +324,15 @@ const handleDelete = async (id) => {
   required
 />
           <button
-            onClick={() => handleUpdate(gh._id)}
-            className="bg-blue-600 text-white py-1 px-4 rounded hover:bg-blue-700"
-          >
-            Save
-          </button>
+  onClick={() => handleUpdate(gh._id)}
+  disabled={loadingId === gh._id}
+  className={`bg-blue-600 text-white py-1 px-4 rounded hover:bg-blue-700 ${
+    loadingId === gh._id ? 'opacity-50 cursor-not-allowed' : ''
+  }`}
+>
+  {loadingId === gh._id ? 'Saving...' : 'Save'}
+</button>
+
           <button
             onClick={() => setIsEditing(null)}
             className="ml-2 text-sm text-red-600 hover:underline"

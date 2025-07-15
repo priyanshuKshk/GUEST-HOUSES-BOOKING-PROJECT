@@ -4,11 +4,15 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 dotenv.config();
 const app = express();
-app.use(cors({
-  origin: ['http://localhost:5173', 'https://guest-houses-booking-project.vercel.app','https://guest-houses-booking-project.onrender.com'],
-  credentials: true
-}));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cors(
+    {
+        origin: process.env.CORS_ORIGIN || '*', 
+        credentials: true,
+    }
+));
+
 
 // Connect MongoDB
 mongoose.connect(process.env.MONGO_URI, {
