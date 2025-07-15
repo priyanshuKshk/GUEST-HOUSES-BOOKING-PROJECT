@@ -1,23 +1,22 @@
 import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { FiLogIn,FiMenu, FiUserPlus, FiX } from "react-icons/fi";
+import { FiLogIn, FiMenu, FiUserPlus, FiX } from "react-icons/fi";
 import { motion } from "framer-motion";
 import logo from "../assets/image.png";
 import { useAuth } from "../context/AuthContext";
 import { User } from "lucide-react";
 export default function Header() {
-    const { isLoggedIn  , logout} = useAuth();
-
+  const { isLoggedIn, logout } = useAuth();
 
   const [isOpen, setIsOpen] = useState(false);
   const [hover, setHover] = useState(false);
   const toggleMenu = () => setIsOpen(!isOpen);
-const handleLogout = () => {
-  const confirmLogout = window.confirm("Are you sure you want to logout?");
-  if (confirmLogout) {
-    logout(); // calls the logout method from useAuth
-  }
-};
+  const handleLogout = () => {
+    const confirmLogout = window.confirm("Are you sure you want to logout?");
+    if (confirmLogout) {
+      logout(); // calls the logout method from useAuth
+    }
+  };
 
   return (
     <div>
@@ -92,33 +91,35 @@ const handleLogout = () => {
           >
             Availability
           </Link>
-      
-          <nav
-        className=" md:flex space-x-6 text-gray-700 font-medium">
-       {!isLoggedIn ? (
-        <NavLink
-          to="/login"
-          className="flex items-center space-x-1 hover:text-blue-600 py-1"
-          onMouseEnter={() => setHover(true)}
-          onMouseLeave={() => setHover(false)}
-        >
-          <FiLogIn />
-          <span className="ml-1" style={{ paddingLeft: "5px" }} id="myElement">
-            Login
-          </span>
-        </NavLink>
-      ) : (
-        <button
-          onClick={handleLogout}
-          className="text-red-600 font-semibold"
-        >
-          Logout
-        </button>
-      )}
-      </nav>
+
+          <nav className=" md:flex space-x-6 text-gray-700 font-medium">
+            {!isLoggedIn ? (
+              <NavLink
+                to="/login"
+                className="flex items-center space-x-1 hover:text-blue-600 py-1"
+                onMouseEnter={() => setHover(true)}
+                onMouseLeave={() => setHover(false)}
+              >
+                <FiLogIn />
+                <span
+                  className="ml-1"
+                  style={{ paddingLeft: "5px" }}
+                  id="myElement"
+                >
+                  Login
+                </span>
+              </NavLink>
+            ) : (
+              <button
+                onClick={handleLogout}
+                className="text-red-600 font-semibold"
+              >
+                Logout
+              </button>
+            )}
+          </nav>
         </div>
       </nav>
-    
 
       {/* Mobile Menu Button */}
     </div>
