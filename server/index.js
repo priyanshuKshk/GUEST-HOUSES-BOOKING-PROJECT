@@ -8,7 +8,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://guest-houses-booking-project.vercel.app/",
+  "https://guest-houses-booking-project.vercel.app",
   "https://guest-houses-booking-project.onrender.com"
   
 ];
