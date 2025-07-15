@@ -110,7 +110,6 @@ const Login = () => {
           </div>
 
         <div className="flex flex-col items-center mt-10">
-      {!isLoggedIn ? (
         <motion.button
           onClick={handleLogin}
             onMouseEnter={() => setHover(true)}
@@ -119,23 +118,8 @@ const Login = () => {
       style={{backgroundColor: hover ? '#0b5394' : '#073763'  , transition: 'background-color 0.3s ease',  cursor: 'pointer',borderRadius:'8px'}}  >
           Login
         </motion.button>
-      ) : (
-        <div className="text-lg font-semibold text-green-700">
-  Welcome back, {user?.firstName || "User"}!
-</div>
-
-      )}
     </div>
         </form>
-
-        <div className="mt-4 text-center">
-          <p className="text-sm text-gray-600">
-            Don't have an account?{' '}
-            <a href="/sign-up" className="text-blue-900 hover:underline">
-              Sign Up
-            </a>
-          </p>
-        </div>
       </motion.div>
     </div>)
   );
