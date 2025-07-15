@@ -5,7 +5,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 const app = express();
 app.use(cors({
-  origin: ['http://localhost:5173', 'https://guest-houses-booking-project.onrender.com'],
+  origin: ['http://localhost:5173', 'https://guest-houses-booking-project.vercel.app','https://guest-houses-booking-project.onrender.com'],
   credentials: true
 }));
 app.use(express.json());
